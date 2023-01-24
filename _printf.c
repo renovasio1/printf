@@ -1,41 +1,30 @@
 #include "main.h"
+
 /**
- * _printf - funtion that print.
- * @format: const char type.
- * Return: Number of digits.
- */
+ * _printf - Produces output according to a format
+ * @format: Is a character string. The format string
+ * is composed of zero or more directives
+ *
+ * Return: The number of characters printed (excluding
+ * the null byte used to end output to strings)
+ **/
 int _printf(const char *format, ...)
 {
-	va_list list;
-	int cont = 0, i = -1;
-	int (*z)(va_list);
+	int size;
+	va_list args;
 
-	va_start(list, format);
+	if (format == NULL)
+		return (-1);
 
-	if (format != NULL)
-	{
-		i = 0;
-		for (; format[cont] != '\0'; i++, cont++)
-		{
-			if (format[cont] != '%')
-				_putchar(format[cont]);
-			else if (format[cont] == '%' && format[cont + 1] == '\0')
-			{
-				return (-1);
-			}
-			else if (format[cont] == '%' && format[cont + 1] != '\0')
-			{
-				z = get_function(format[cont + 1]);
-				if (z == NULL)
-					_putchar(format[cont]);
-				else
-				{
-					i = (i + z(list)) - 1;
-					cont++;
-				}
-			}
-		}
-	}
-	va_end(list);
-	return (i);
+	size = _strlen(format);
+	if (size <= 0)
+		return (0);
+
+	va_start(args, format);
+	size = handler(format, args);
+
+	_putchar(-1);
+	va_end(args);
+
+	return (size);
 }

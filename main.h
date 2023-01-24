@@ -1,29 +1,50 @@
-#ifndef HEADER_H
-#define HEADER_H
-#include <stdarg.h>
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdarg.h>
+
+/* utils.c */
+int _strlen(const char *);
+int print(char *);
+char *itoa(long int, int);
+
+/* printf.c */
+int _printf(const char *, ...);
+
+/* handler.c */
+int handler(const char *, va_list);
+int percent_handler(const char *, va_list, int *);
+
+/* printers */
+int print_string(va_list);
+int print_char(va_list);
+int print_integer(va_list);
+int print_binary(va_list);
+int print_rot(va_list);
+int print_unsigned(va_list);
+int print_octal(va_list);
+int print_hexadecimal_low(va_list);
+int print_hexadecimal_upp(va_list);
+int print_pointer(va_list);
+int print_rev_string(va_list);
+
+/* _putchar.c */
+int _putchar(char);
+int buffer(char);
+
 /**
- * struct printf_struct - structure
- * @p_str: pointer.
- * @f: variable.
+ * struct _format - Typedef struct
  *
- * Description: array.
- */
-
-typedef struct printf_struct
+ * @type: Format
+ * @f: The function associated
+ **/
+typedef struct _format
 {
-	char *p_str;
-	int (*f)(va_list x);
-} strct;
+	char type;
+	int (*f)(va_list);
+} format;
 
-int _putchar(char c);
-int _printf(const char *format, ...);
-int printf_char(va_list list);
-int printf_str(va_list list);
-int printf_porc(va_list list);
-int printf_digit(va_list list);
-int printf_reversed(va_list list);
-int aux(int arg);
-int (*get_function(char c))(va_list a);
+
 #endif
